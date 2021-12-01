@@ -25,7 +25,7 @@ class ModelMGPU(keras.Model):
         return super(ModelMGPU, self).__getattribute__(attrname)
 
 
-class VladPooling(keras.engine.Layer):
+class VladPooling(keras.layers.Layer):
     '''
     This layer follows the GhostVlad
     '''
@@ -84,7 +84,7 @@ def vggvox_resnet2d_icassp(input_dim=(257, 250, 1), num_class=8631, mode='train'
     ghost_clusters=args.ghost_cluster
     bottleneck_dim=args.bottleneck_dim
     aggregation = args.aggregation_mode
-    mgpu = len(keras.backend.tensorflow_backend._get_available_gpus())
+    mgpu = 1#len(keras.backend.tensorflow_backend._get_available_gpus())
 
     if net == 'resnet34s':
         inputs, x = backbone.resnet_2D_v1(input_dim=input_dim, mode=mode)

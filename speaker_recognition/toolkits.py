@@ -1,9 +1,10 @@
 import os
 import numpy as np
-
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 def initialize_GPU(args):
     # Initialize GPUs
-    import tensorflow as tf
+    #import tensorflow as tf
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True

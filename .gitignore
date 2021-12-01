@@ -1,8 +1,0 @@
-*~
-*.pyc
-.DS_Store
-*result.txt
-build/*
-dist/*
-__pycache__/*
-.coverage

@@ -10,6 +10,8 @@ import model as spkModel
 from uisrnn import UISRNN
 from viewer import PlotDiar
 # Parse the arguments for the speacer recognition model
+
+
 import arguments_rec
 args = arguments_rec.parse_arguments()
 
@@ -80,7 +82,7 @@ def lin_spectogram_from_wav(wav, hop_length, win_length, n_fft=1024):
 #           |-------------------|
 #                     |-------------------|
 #                               |-------------------|
-def load_data(path, win_length=400, sr=16000, hop_length=160, n_fft=512, embedding_per_second=0.5, overlap_rate=0.5):
+def load_data(path='/content/drive/MyDrive/Project/Speaker_Diarization/Shetty_and_Kobe.wav', win_length=400, sr=16000, hop_length=160, n_fft=512, embedding_per_second=0.5, overlap_rate=0.5):
     wav, intervals = load_wav(path, sr=sr)
     linear_spect = lin_spectogram_from_wav(wav, hop_length, win_length, n_fft)
     mag, _ = librosa.magphase(linear_spect)  # magnitude
@@ -109,9 +111,10 @@ def load_data(path, win_length=400, sr=16000, hop_length=160, n_fft=512, embeddi
 
     return utterances_spec, intervals
 
-def main(wav_path, embedding_per_second=1.0, overlap_rate=0.5):
+def main(wav_path, embedding_per_second=1.0, overlap_rate=0.5, transcribe_file='transcribe.txt', summerize_file='summerize.txt'):
 
     # gpu configuration
+    #wav_path='test_wavs/UK.wav'
     toolkits.initialize_GPU(args)
     params = {'dim': (257, None, 1),
               'nfft': 512,
@@ -175,9 +178,17 @@ def main(wav_path, embedding_per_second=1.0, overlap_rate=0.5):
             e = fmtTime(e)
             print(s+' ==> '+e)
 
-    p = PlotDiar(map=speakerSlice, wav=wav_path, gui=True, pick=True, size=(25, 6))
-    p.draw()
-    p.plot.show()
+    #p = PlotDiar(map=speakerSlice, wav=wav_path, gui=True, pick=True, size=(25, 6))
+    #p.draw()
+    #p.plot.show()
+    from split_audio import make_chunks
+    make_chunks(speakerSlice,wav_path,out_file=transcribe_file)
+
+    #Summerized file
+    from summarize import generate_summary
+    generate_summary(transcribe_file,out_file=summerize_file)
 
 if __name__ == '__main__':
-    main(args.diar, embedding_per_second=1.2, overlap_rate=0.2)
+    path=input('Enter path to the wav file:  -->')
+    
+    main(path, embedding_per_second=1.2, overlap_rate=0.2)
