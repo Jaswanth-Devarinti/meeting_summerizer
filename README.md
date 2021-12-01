@@ -8,3 +8,5 @@ we used syml.ai api for our speech to text converser. So you need to update it w
 https://drive.google.com/drive/folders/1LTaEoJhsS6ZVHNgqumPw1dV5opfuKff2?usp=sharing
 
 models can be found here
+
+(please check the code in master branch)
