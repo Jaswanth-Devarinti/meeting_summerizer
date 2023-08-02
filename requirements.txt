@@ -1,0 +1,8 @@
+numpy==1.19.5
+scipy>=1.1.0
+torch>=0.4.0
+keras>=2.2.4
+tensorflow>=1.8.0
+pyannote.metrics 
+librosa
+h5py==3.1.0
